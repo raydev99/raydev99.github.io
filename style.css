@@ -1,0 +1,238 @@
+/* ============ 基底與和紙質感 ============ */
+:root {
+  --paper: #f4f0e6;
+  --ink: #23252a;
+  --ink-soft: #6b6e74;
+  --seal: #a63c2c;
+  --line: rgba(35, 37, 42, 0.16);
+  --serif: "Shippori Mincho", Georgia, serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--serif);
+  color: var(--ink);
+  background-color: var(--paper);
+  /* 和紙：一層極淡的纖維噪點（SVG feTurbulence） */
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23f)'/></svg>");
+  overflow-x: hidden;
+  line-height: 1.85;
+}
+
+/* 墨水畫布：固定全屏、multiply 疊在和紙上，白色處即透明 */
+#ink {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nav, .hero, main, .footer { position: relative; z-index: 2; }
+
+::selection { background: rgba(166, 60, 44, 0.2); }
+
+/* ============ 朱印（僅保留導覽列一枚） ============ */
+.seal-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--seal);
+  color: #f6f1e6;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 4px 6px 5px 6px;
+  user-select: none;
+}
+
+/* ============ 導覽列 ============ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  z-index: 10;
+}
+.nav-logo { text-decoration: none; }
+.nav-links a {
+  margin-left: 36px;
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover { color: var(--ink); }
+
+/* ============ 首屏 ============ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+}
+.hero-name {
+  font-size: clamp(40px, 7vw, 76px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+.hero-hint {
+  position: absolute;
+  bottom: 48px;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: var(--ink-soft);
+  opacity: 0.6;
+}
+
+/* ============ 區段共用 ============ */
+.section {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 140px 28px 20px;
+}
+.section-title {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.rule {
+  width: 48px;
+  height: 1px;
+  background: var(--ink);
+  margin: 22px 0 56px;
+}
+
+/* ============ 學歷 ============ */
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  max-width: 720px;
+}
+.edu-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.edu-head h3 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.edu-date {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.edu-degree {
+  margin-top: 6px;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+.edu-course {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+}
+
+/* ============ 工作經歷 ============ */
+.exp-stack {
+  margin-top: 4px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--seal);
+}
+.exp-bullets {
+  margin-top: 12px;
+  padding-left: 18px;
+  list-style: none;
+}
+.exp-bullets li {
+  position: relative;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.exp-bullets li::before {
+  content: "・";
+  position: absolute;
+  left: -18px;
+  color: var(--ink);
+}
+
+/* ============ 專案連結 ============ */
+.proj-link {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.proj-link:hover { color: var(--seal); border-color: var(--seal); }
+
+/* ============ 關於 ============ */
+.about-text { max-width: 620px; }
+.about-text p { margin-bottom: 20px; font-size: 16px; }
+
+/* ============ 聯絡 ============ */
+#contact { padding-bottom: 150px; }
+.contact-lead { color: var(--ink-soft); letter-spacing: 0.08em; margin-bottom: 24px; }
+.contact-mail {
+  font-size: clamp(18px, 3vw, 26px);
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 3px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.contact-mail:hover { color: var(--seal); border-color: var(--seal); }
+
+/* ============ 頁尾 ============ */
+.footer {
+  text-align: center;
+  padding: 40px 0 52px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.15em;
+}
+
+/* ============ 捲動浮現 ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ============ 行動裝置 ============ */
+@media (max-width: 640px) {
+  .nav { padding: 16px 22px; }
+  .nav-links a { margin-left: 22px; }
+  .section { padding-top: 110px; }
+}
