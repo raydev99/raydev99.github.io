@@ -10,6 +10,9 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* 防禦性：任何圖片都不得超出其容器寬度 */
+img { max-width: 100%; height: auto; }
+
 html { scroll-behavior: smooth; }
 
 body {
